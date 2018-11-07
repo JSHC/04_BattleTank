@@ -9,8 +9,10 @@
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
+
 	ATank* AITank = GetControlledTank();
 	ATank* PlayerTank = GetPlayerTank();
+
 	if (!AITank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No AI Tank found for AI controller %s"), *this->GetName());

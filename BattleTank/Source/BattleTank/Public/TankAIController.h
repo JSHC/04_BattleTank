@@ -20,5 +20,5 @@ private:
 	ATank* GetControlledTank() const;
 	ATank* GetPlayerTank() const;
 public:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 };
