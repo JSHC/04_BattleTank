@@ -49,13 +49,13 @@ void ATankPlayerController::AimTowardsCrosshair()
 	//Get world location through crosshair (Line trace)
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
 		//Aim the controlled tank at the line trace
+		GetControlledTank()->AimAt(HitLocation);
 	}
 	
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 {
 	//Find the crosshair position
 	int32 ViewportSizeX, ViewportSizeY;
@@ -63,23 +63,14 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairPosX, ViewportSizeY * CrosshairPosY);
 	
 	//De-project screen position of the crosshair to a world direction
-	FVector HitLocation;
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
+		//Line-trace along that direction, get hit result (Up to max range)
 		GetLookVectorHitLocation(LookDirection, HitLocation);
-		UE_LOG(LogTemp, Warning, TEXT("HitResult: %s"), *HitLocation.ToString());
+		return true;
 	}
-	//Line-trace along that direction, get hit result (Up to max range)
 	
-
-
-
-		//If ray intersects with landscape
-			//Return true
-		//If it doesn't hit landscape
-			//Return false
-	//OutHitLocation = OutHitResult.Location;
 	return false;
 }
 
