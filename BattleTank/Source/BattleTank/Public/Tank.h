@@ -24,9 +24,14 @@ private:
 	virtual void BeginPlay() override;
 private:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 100000.f; //TODO find 
 public:	
 	void AimAt(FVector HitLocation);	
 
 	UFUNCTION(BlueprintCallable)
 	void SetBarrelReference(UStaticMeshComponent *BarrelToSet);
+
+	
 };
