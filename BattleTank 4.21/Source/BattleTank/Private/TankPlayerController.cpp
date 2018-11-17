@@ -4,6 +4,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
+#include "Tank.h"
 
 
 
