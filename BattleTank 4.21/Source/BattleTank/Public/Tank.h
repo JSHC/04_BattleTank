@@ -9,6 +9,7 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 class UTankAimingComponent;
 class ATank;
 
@@ -34,6 +35,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
+	UFUNCTION(BlueprintCallable)
+	void SetTurretReference(UTankTurret *TurretToSet);
 
 	
 };
