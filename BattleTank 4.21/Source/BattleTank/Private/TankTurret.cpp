@@ -3,7 +3,6 @@
 #include "TankTurret.h"
 
 void UTankTurret::Rotate(float RelativeSpeed) {
-	UE_LOG(LogTemp, Warning, TEXT("Rotate on TankTurret Called"));
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1.f, 1.f);
 
 	auto RotationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;

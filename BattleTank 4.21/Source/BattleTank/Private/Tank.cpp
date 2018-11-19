@@ -43,6 +43,11 @@ void ATank::AimAt(FVector HitLocation)
 	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"), *OurTankName, *HitLocation.ToString());
 }
 
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire called"));
+}
+
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Setting barrel reference"));

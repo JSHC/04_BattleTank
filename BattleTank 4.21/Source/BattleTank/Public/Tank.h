@@ -34,6 +34,8 @@ public:
 	void AimAt(FVector HitLocation);	
 
 	UFUNCTION(BlueprintCallable)
+	void Fire();
+	UFUNCTION(BlueprintCallable)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
 	UFUNCTION(BlueprintCallable)
 	void SetTurretReference(UTankTurret *TurretToSet);
