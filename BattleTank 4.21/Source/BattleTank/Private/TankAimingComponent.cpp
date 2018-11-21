@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Components/ActorComponent.h"
 
 
 
