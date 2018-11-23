@@ -18,16 +18,11 @@ public:
 
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
 	void SetTurretReference(UTankTurret *TurretToSet);
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	//TODO add SetTurretComponent
 	void MoveBarrelTowards(FVector AimDirection);
-	void RotateTurretTowards(FVector AimDirection);
 };

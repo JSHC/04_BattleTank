@@ -8,7 +8,7 @@
 /**
  * 
  */
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 {
 	GENERATED_BODY()
@@ -16,6 +16,7 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 
 public:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 25.f;
+	float MaxDegreesPerSecond = 25;
+
 	void Rotate(float RelativeSpeed);
 };

@@ -19,19 +19,25 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 private:
 	//Start the tank barrel rotation toward the crosshair location
 	ATank* GetControlledTank() const;
+
 	virtual void Tick(float DeltaTime) override;
+
 	virtual void BeginPlay() override;
 
 	void AimTowardsCrosshair();
+
 	UPROPERTY(EditAnywhere)
-	float CrosshairPosX = 0.5f;
+	float CrosshairXLocation = 0.5;
+
 	UPROPERTY(EditAnywhere)
-	float CrosshairPosY = 0.33333f;
+	float CrosshairYLocation = 0.3333;
+
 	UPROPERTY(EditAnywhere)
-	float LineTraceRange = 100000.f;
-public:
+	float LineTraceRange = 1000000;
+
 	bool GetSightRayHitLocation(FVector &HitLocation) const;
-	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 	

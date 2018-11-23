@@ -7,7 +7,7 @@
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
 	//Make sure relativespeed isn't too high/low
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1.f, 1.f);
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
 	//Move the barrel the right amount per frame
 	//Given a max speed and max elevation
 	auto ElevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;

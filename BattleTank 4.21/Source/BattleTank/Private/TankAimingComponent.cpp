@@ -13,24 +13,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
+	//bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
-}
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
 }
@@ -43,53 +27,47 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	//Check for nullpointers in references
 	if (!Barrel)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No barrel refrence found in TankAimingComponent"));
 		return;
 	}
 	if (!Turret)
 	{
-		UE_LOG(LogTemp, Error, TEXT("No turret refrence found in TankAimingComponent"));
 		return;
 	}
 	//Out parameter for launch velocity
 	FVector OutLaunchVelocity;
 	//Get the socket location for where we want the projectile to spawn
 	FVector StartLocation = Barrel->GetSocketLocation(FName("ProjectileSocket"));
-	TArray<AActor*> IgnoredActors;
-	IgnoredActors.Add(OurTank);
 	//Calculate the OutLaunchVelocity
-	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
 		this,
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,
 		LaunchSpeed,
 		false,
-		0.0f,
-		0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace,
-		FCollisionResponseParams::DefaultResponseParam,
-		IgnoredActors,
-		true
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace // Paramater must be present to prevent bug
 	);
+
 	if(bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto BarrelLocation = Barrel->GetComponentLocation().ToString();
-		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s from %s, firing at %f"), *OurTankName, *AimDirection.ToString(), *BarrelLocation, LaunchSpeed);
 		//Move the barrel and/or rotate the turret
 		MoveBarrelTowards(AimDirection);
-		RotateTurretTowards(AimDirection);
 	}
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret *TurretToSet)
 {
+	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
 
@@ -97,19 +75,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	//Get difference between barrel rotation and the aiming location
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimDirectionRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimDirectionRotator - BarrelRotator;
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	//Start rotating the barrel in the intended direction at a constant speed
 	Barrel->Elevate(DeltaRotator.Pitch);
-	
-}
-
-void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
-{
-	//Get difference between turret rotation and the aiming location
-	auto TurretRotator = Turret->GetForwardVector().Rotation();
-	auto AimDirectionRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimDirectionRotator - TurretRotator;
-
 	Turret->Rotate(DeltaRotator.Yaw);
 }
