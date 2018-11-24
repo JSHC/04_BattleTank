@@ -57,8 +57,8 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 
 void ATank::Fire()
 {
-	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	UE_LOG(LogTemp, Warning, TEXT("Fire called"));
+	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
+	UE_LOG(LogTemp, Warning, TEXT("Fire called at %f"), LastFireTime);
 	if (Barrel && bIsReloaded)
 	{
 		auto SocketLocation = Barrel->GetSocketLocation(FName("ProjectileSocket"));
@@ -70,7 +70,7 @@ void ATank::Fire()
 		);
 		//Launch the projectile
 		Projectile->Launch(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
+		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 
 
