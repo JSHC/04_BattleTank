@@ -18,7 +18,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	
 private:
 	//Start the tank barrel rotation toward the crosshair location
-	ATank* GetControlledTank() const;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -41,4 +40,7 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 	
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
 };

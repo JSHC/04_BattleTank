@@ -39,6 +39,7 @@ private:
 
 	double LastFireTime = 0;
 protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UTankAimingComponent* TankAimingComponent = nullptr;
 public:	
 	void AimAt(FVector HitLocation);	
