@@ -5,6 +5,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/Actor.h"
 
 
 
@@ -19,6 +20,13 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	//Get the controlled tank
@@ -27,11 +35,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	//Check for nullpointers in references
 	if (!Barrel)
 	{
-		return;
+		UE_LOG(LogTemp, Error, TEXT("No barrel reference found on %s"), *OurTankName)
+			return;
 	}
 	if (!Turret)
 	{
-		return;
+		UE_LOG(LogTemp, Error, TEXT("No turret reference found on %s"), *OurTankName)
+			return;
 	}
 	//Out parameter for launch velocity
 	FVector OutLaunchVelocity;
@@ -59,20 +69,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet)
-{
-	if (!BarrelToSet) { return; }
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret *TurretToSet)
-{
-	if (!TurretToSet) { return; }
-	Turret = TurretToSet;
-}
-
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!Barrel || !Turret)
+	{
+		return;
+	}
 	//Get difference between barrel rotation and the aiming location
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
