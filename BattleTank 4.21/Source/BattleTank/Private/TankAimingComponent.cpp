@@ -33,16 +33,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	auto OurTankName = GetOwner()->GetName();
 	auto OurTank = GetOwner();
 	//Check for nullpointers in references
-	if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No barrel reference found on %s"), *OurTankName)
-			return;
-	}
-	if (!Turret)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No turret reference found on %s"), *OurTankName)
-			return;
-	}
+	if (!ensure(Barrel && Turret)) { return; }
 	//Out parameter for launch velocity
 	FVector OutLaunchVelocity;
 	//Get the socket location for where we want the projectile to spawn
@@ -71,10 +62,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!Barrel || !Turret)
-	{
-		return;
-	}
+	if (!ensure(Barrel && Turret)) { return; }
 	//Get difference between barrel rotation and the aiming location
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();

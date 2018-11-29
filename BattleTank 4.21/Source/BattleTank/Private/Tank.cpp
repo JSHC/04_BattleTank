@@ -26,21 +26,13 @@ void ATank::BeginPlay()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No Aiming Component on %s"), *AActor::GetName())
-		return;
-	}
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
-	if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No barrel reference in ATank::Fire() on %s"), *AActor::GetName())
-		return;
-	}
+	if (!ensure(Barrel)) { return; }
 	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Fire called at %f"), LastFireTime);
