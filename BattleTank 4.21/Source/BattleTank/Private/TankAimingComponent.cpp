@@ -16,10 +16,30 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	//bWantsBeginPlay = true;
+	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 	
 	// ...
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	LastFireTime = GetWorld()->GetTimeSeconds(); //First fire after initial reload
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	UE_LOG(LogTemp, Warning, TEXT("Gametime: %f | LastFireTime: %f | Diff: %f"),GetWorld()->GetTimeSeconds(), LastFireTime, GetWorld()->GetTimeSeconds() - LastFireTime)
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	{
+		CurrentFiringState = EFiringState::Reloading;
+	}
+	else
+	{
+		CurrentFiringState = EFiringState::Ready;
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet)
@@ -66,6 +86,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	if (!ensure(Barrel) ||  !ensure(Turret)) { return; }
 	//Get difference between barrel rotation and the aiming location
+	
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
@@ -94,3 +115,9 @@ void UTankAimingComponent::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
+
+
+
+
+
+

@@ -40,7 +40,6 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 
-	UTankAimingComponent *AimingComponent = nullptr;
 	
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
