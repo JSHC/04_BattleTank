@@ -6,7 +6,6 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankMovementComponent.h"
 #include "GameFramework/Actor.h"
 
 // Sets default values
@@ -22,6 +21,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("468de2ed: BeginPlay C++ called on %s"), *AActor::GetName())
+		TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::AimAt(FVector HitLocation)
