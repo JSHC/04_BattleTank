@@ -9,7 +9,6 @@
 /**
  *  Responsible for helping the player aim.
  */
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -40,11 +39,10 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
+
+	UTankAimingComponent *AimingComponent = nullptr;
 	
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-		void FoundAimingComponent(UTankAimingComponent *AimingCompRef);
+	void FoundAimingComponent(UTankAimingComponent *AimingCompRef);
 };

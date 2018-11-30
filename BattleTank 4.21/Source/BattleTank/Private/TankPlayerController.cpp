@@ -4,8 +4,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "Engine/EngineTypes.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
+#include "GameFramework/Pawn.h"
 
 
 
@@ -13,8 +13,7 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
@@ -32,23 +31,14 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 }
 
-
-
-
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) {	return;	}
 	FVector HitLocation; //Out parameter
 	//Get world location through crosshair (Line trace)
-	if (GetSightRayHitLocation(HitLocation))
+	if (GetSightRayHitLocation(HitLocation) && ensure(AimingComponent))
 	{
 		//Aim the controlled tank at the line trace
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 	
 }

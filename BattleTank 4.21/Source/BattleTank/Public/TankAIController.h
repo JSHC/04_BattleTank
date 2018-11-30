@@ -9,7 +9,7 @@
 /**
  * 
  */
-class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
@@ -22,6 +22,10 @@ private:
 	virtual void Tick(float DeltaTime) override;
 	//How close the AI can get to the player
 	float AcceptanceRadius = 3000;
+
+	APawn *PlayerTank = nullptr;
+	APawn *ControlledTank = nullptr;
+	UTankAimingComponent *AimingComponent = nullptr;
 public:
 	
 };

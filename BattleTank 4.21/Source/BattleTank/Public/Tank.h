@@ -7,7 +7,6 @@
 
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 class ATank;
 
@@ -37,11 +36,8 @@ private:
 
 	double LastFireTime = 0;
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "Setup")
-	UTankAimingComponent* TankAimingComponent = nullptr;
-public:	
-	void AimAt(FVector HitLocation);	
 
+public:	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 	
