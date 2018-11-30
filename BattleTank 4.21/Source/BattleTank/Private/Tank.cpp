@@ -20,25 +20,3 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ATank::Fire()
-{
-	if (!ensure(Barrel)) { return; }
-	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
-	
-	//UE_LOG(LogTemp, Warning, TEXT("Fire called at %f"), LastFireTime);
-	if (Barrel && bIsReloaded)
-	{
-		auto SocketLocation = Barrel->GetSocketLocation(FName("ProjectileSocket"));
-		//Spawn a projectile at Socket location
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-		);
-		//Launch the projectile
-		Projectile->Launch(LaunchSpeed);
-		LastFireTime = GetWorld()->GetTimeSeconds();
-	}
-
-
-}

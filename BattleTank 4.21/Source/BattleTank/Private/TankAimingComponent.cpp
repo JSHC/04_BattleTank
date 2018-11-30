@@ -6,6 +6,8 @@
 #include "TankTurret.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
+#include "Engine/World.h"
+#include "Projectile.h"
 
 
 
@@ -70,4 +72,25 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//Start rotating the barrel in the intended direction at a constant speed
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
+}
+
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel) || !ensure(ProjectileBlueprint)) { return; }
+	bool bIsReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	//UE_LOG(LogTemp, Warning, TEXT("Fire called at %f"), LastFireTime);
+	if (Barrel && bIsReloaded)
+	{
+		auto SocketLocation = Barrel->GetSocketLocation(FName("ProjectileSocket"));
+		//Spawn a projectile at Socket location
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+		//Launch the projectile
+		Projectile->Launch(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+	}
 }

@@ -20,25 +20,8 @@ private:
 	ATank();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	//Local barrel reference for projectile spawning
-	UTankBarrel* Barrel = nullptr; //TODO Remove
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
-
-	//TODO remove once refactored to aiming component
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000; //TODO find 
-
-	double LastFireTime = 0;
 protected:
 
 public:	
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void Fire();
 	
 };
