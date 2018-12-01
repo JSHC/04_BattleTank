@@ -13,6 +13,7 @@ UCLASS(meta = (BluePrintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
 	GENERATED_BODY()
+		
 
 public:
 	UFUNCTION(BlueprintCallable, category = Input)
@@ -21,4 +22,8 @@ public:
 	//Max force per track in Newtons
 	UPROPERTY(EditDefaultsOnly)
 		float TrackMaxDrivingForce = 35000000;
+
+private:
+	UTankTrack();
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };
