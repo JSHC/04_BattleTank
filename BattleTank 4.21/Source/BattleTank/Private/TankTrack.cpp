@@ -1,10 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankTrack.h"
+#include "Engine/Classes/Components/PrimitiveComponent.h"
 
 UTankTrack::UTankTrack()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
+
+UTankTrack::BeginPlay()
+{
+
 }
 
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -13,7 +20,6 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	
 	
 	auto SlipSpeed = FVector::DotProduct(GetRightVector(),GetComponentVelocity());
-	UE_LOG(LogTemp, Warning, TEXT("%s: %f"), *GetOwner()->GetName(), SlipSpeed)
 		//Work out required acceleration this frame to correct
 	auto CorrectionAcceleration = -SlipSpeed / DeltaTime * GetRightVector();
 	//Calculate and apply sideways force
@@ -32,3 +38,7 @@ void UTankTrack::SetThrottle(float Throttle)
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
 
+void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnHit called"));
+}
