@@ -31,7 +31,9 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation; //Out parameter
 	//Get world location through crosshair (Line trace)
-	if (GetSightRayHitLocation(HitLocation) && ensure(AimingComponent))
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("%i"), bGotHitLocation);
+	if (bGotHitLocation && ensure(AimingComponent))
 	{
 		//Aim the controlled tank at the line trace
 		AimingComponent->AimAt(HitLocation);
@@ -51,10 +53,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		//Line-trace along that direction, get hit result (Up to max range)
-		GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 	
-	return true;
+	return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection) const
