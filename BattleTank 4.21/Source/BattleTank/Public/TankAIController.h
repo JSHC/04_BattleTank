@@ -21,11 +21,15 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	//How close the AI can get to the player
-	float AcceptanceRadius = 3000;
+
+
 
 	APawn *PlayerTank = nullptr;
 	APawn *ControlledTank = nullptr;
 	UTankAimingComponent *AimingComponent = nullptr;
 public:
-	
+
+protected:
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float AcceptanceRadius = 6000;
 };

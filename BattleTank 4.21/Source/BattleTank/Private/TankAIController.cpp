@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "AIController.h"
 #include "TankAimingComponent.h"
+#include "Engine/Public/DrawDebugHelpers.h"
 
 
 
@@ -19,6 +20,7 @@ void ATankAIController::BeginPlay() {
 	{
 		AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	}
+	UE_LOG(LogTemp, Warning, TEXT("AcceptanceRadius: %f"), AcceptanceRadius);
 	
 
 }
@@ -26,6 +28,8 @@ void ATankAIController::BeginPlay() {
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	DrawDebugSphere(GetWorld(), GetPawn()->GetActorLocation(), AcceptanceRadius, 32, FColor::Red);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetPawn()->GetActorLocation().ToCompactString())
 	
 
 	if (!ensure(PlayerTank && AimingComponent && ControlledTank)) { return; }
@@ -34,7 +38,11 @@ void ATankAIController::Tick(float DeltaTime)
 	//Aim at the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 	//Fire if ready
-	AimingComponent->Fire();
+	if (AimingComponent->GetCurrentFiringState() == EFiringState::Ready)
+	{
+		AimingComponent->Fire();
+	}
+	
 	
 }
 

@@ -28,6 +28,8 @@ void UTankAimingComponent::BeginPlay()
 	LastFireTime = GetWorld()->GetTimeSeconds(); //First fire after initial reload
 }
 
+
+
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -138,6 +140,9 @@ bool UTankAimingComponent::IsBarrelMoving()
 	return !AimDirection.Equals(BarrelForwardVector, 0.01);
 }
 
-
+EFiringState UTankAimingComponent::GetCurrentFiringState() const
+{
+	return CurrentFiringState;
+}
 
 
