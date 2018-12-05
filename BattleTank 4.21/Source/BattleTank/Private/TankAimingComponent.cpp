@@ -26,6 +26,7 @@ void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	LastFireTime = GetWorld()->GetTimeSeconds(); //First fire after initial reload
+	CurrentAmmo = MaxAmmo;
 }
 
 
@@ -89,6 +90,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	}
 }
 
+
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	if (!ensure(Barrel) ||  !ensure(Turret)) { return; }
@@ -129,6 +132,15 @@ void UTankAimingComponent::Fire()
 		//Launch the projectile
 		Projectile->Launch(LaunchSpeed);
 		LastFireTime = GetWorld()->GetTimeSeconds();
+
+		if (CurrentAmmo > 0)
+		{
+			CurrentAmmo--;
+		}
+		else
+		{
+			CurrentAmmoState = EAmmoState::Empty;
+		}
 	}
 }
 
@@ -143,6 +155,11 @@ bool UTankAimingComponent::IsBarrelMoving()
 EFiringState UTankAimingComponent::GetCurrentFiringState() const
 {
 	return CurrentFiringState;
+}
+
+int32 UTankAimingComponent::GetCurrentAmmo() const
+{
+	return CurrentAmmo;
 }
 
 
