@@ -78,7 +78,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAmmoState CurrentAmmoState = EAmmoState::Has_ammo;
 	UPROPERTY(EditDefaultsOnly, Category = "Ammo")
-	uint32 MaxAmmo = 10;
+	int32 MaxAmmo = 5;
 
 
 
