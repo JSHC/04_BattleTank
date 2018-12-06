@@ -9,7 +9,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Ready
+	Ready,
+	OutOfAmmo
 };
 
 UENUM()
