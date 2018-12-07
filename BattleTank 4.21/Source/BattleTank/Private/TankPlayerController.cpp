@@ -32,7 +32,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; //Out parameter
 	//Get world location through crosshair (Line trace)
 	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
-	UE_LOG(LogTemp, Warning, TEXT("%i"), bGotHitLocation);
+	
 	if (bGotHitLocation && ensure(AimingComponent))
 	{
 		//Aim the controlled tank at the line trace

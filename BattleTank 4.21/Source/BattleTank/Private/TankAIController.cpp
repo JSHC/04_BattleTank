@@ -20,7 +20,7 @@ void ATankAIController::BeginPlay() {
 	{
 		AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("AcceptanceRadius: %f"), AcceptanceRadius);
+	
 	
 
 }
@@ -29,7 +29,7 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	DrawDebugSphere(GetWorld(), GetPawn()->GetActorLocation(), AcceptanceRadius, 32, FColor::Red);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetPawn()->GetActorLocation().ToCompactString())
+	
 	
 
 	if (!ensure(PlayerTank && AimingComponent && ControlledTank)) { return; }
