@@ -2,6 +2,8 @@
 #include "Projectile.h"
 #include "Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
+#include "Public/TimerManager.h"
 
 
 
@@ -59,4 +61,14 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle TimerHandle;
+	//Set timer that repeats every 10 seconds, calling OnTimerExpire()
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerExpire, 10.f, false);
+}
+
+void AProjectile::OnTimerExpire() {
+	this->Destroy();
 }

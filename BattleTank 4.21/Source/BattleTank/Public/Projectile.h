@@ -22,6 +22,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void Launch(float Speed);
+
+
 protected:
 
 private:
@@ -41,4 +43,10 @@ private:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
+
+	UFUNCTION()
+	void OnTimerExpire();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 10.f;
 };
