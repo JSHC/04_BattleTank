@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 
 
+
 // Sets default values
 AProjectile::AProjectile()
 {
@@ -25,6 +26,8 @@ AProjectile::AProjectile()
 	ImpactBlast->bAutoActivate = false;
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	ProjectileMovement->bAutoActivate = false;	
 }
@@ -55,4 +58,5 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	UE_LOG(LogTemp, Warning, TEXT("OnHit called on Projectile"))
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
 }

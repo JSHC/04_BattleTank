@@ -7,6 +7,7 @@
 #include "AIController.h"
 #include "TankAimingComponent.h"
 #include "Engine/Public/DrawDebugHelpers.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 
 
 

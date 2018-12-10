@@ -6,12 +6,14 @@
 UTankTrack::UTankTrack()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+	this->SetNotifyRigidBodyCollision(true);
 }
 
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+
 	
 }
 
