@@ -22,12 +22,10 @@ private:
 	virtual void Tick(float DeltaTime) override;
 	//How close the AI can get to the player
 
+	virtual void SetPawn(APawn* InPawn) override;
 
-
-	APawn *PlayerTank = nullptr;
-	APawn *ControlledTank = nullptr;
-	UTankAimingComponent *AimingComponent = nullptr;
-public:
+	UFUNCTION()
+	void OnPossedTankDeath();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Setup")
