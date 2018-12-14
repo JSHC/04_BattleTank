@@ -34,17 +34,19 @@ void ATankPlayerController::SetPawn(APawn *InPawn)
 		auto PossessedTank = Cast<ATank>(InPawn);
 
 		// TODO Subscribe to tank death broadcast event
-		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::StartSpectatingOnly);
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerTankDeath);
 	}
 }
 
-void ATankPlayerController::StartSpectatingOnly()
+void ATankPlayerController::OnPlayerTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Player tank is dead"))
+		StartSpectatingOnly();
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FVector HitLocation; //Out parameter

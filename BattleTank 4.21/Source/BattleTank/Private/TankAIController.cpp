@@ -34,19 +34,21 @@ void ATankAIController::SetPawn(APawn *InPawn)
 void ATankAIController::OnPossedTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("AI Tank died"))
+	if (!ensure(GetPawn())) { return; }
 	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!GetPawn()) { return; }
 	DrawDebugSphere(GetWorld(), GetPawn()->GetActorLocation(), AcceptanceRadius, 32, FColor::Red);
 	
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 
 
-	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	if (!(PlayerTank && ControlledTank)) { return; }
 
 	MoveToActor(PlayerTank,AcceptanceRadius);
 	//Aim at the player

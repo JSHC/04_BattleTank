@@ -43,7 +43,7 @@ private:
 	virtual void SetPawn(APawn *InPawn) override;
 
 	UFUNCTION()
-	void StartSpectatingOnly();
+	void OnPlayerTankDeath();
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent *AimingCompRef);
