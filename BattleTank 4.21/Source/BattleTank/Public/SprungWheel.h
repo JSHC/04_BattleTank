@@ -24,14 +24,11 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	USceneComponent *SceneRoot = nullptr;
+	void SetupConstraint();
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-		UPhysicsConstraintComponent *PhysicsConstraint = nullptr;
+	UPhysicsConstraintComponent *PhysicsConstraint = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent *Mass = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent *Wheel = nullptr;

@@ -12,23 +12,17 @@ ASprungWheel::ASprungWheel()
 	PhysicsConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Phsyics Constraint"));
 	SetRootComponent(PhysicsConstraint);
 
-	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(PhysicsConstraint);
-
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	Wheel->SetupAttachment(PhysicsConstraint);
-
+	
 }
 
 // Called when the game starts or when spawned
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
+	SetupConstraint();
 
-	if(GetAttachParentActor())
-		UE_LOG(LogTemp, Warning, TEXT("Not null"))
-	else
-		UE_LOG(LogTemp, Warning, TEXT("Null"))
 	
 }
 
@@ -37,5 +31,18 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASprungWheel::SetupConstraint()
+{
+	if (GetAttachParentActor()) {
+		UE_LOG(LogTemp, Warning, TEXT("Not null, %s"), *GetAttachParentActor()->GetName())
+			if (!GetAttachParentActor()) { return; }
+		UPrimitiveComponent *BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+		if (!BodyRoot) { return; }
+		PhysicsConstraint->SetConstrainedComponents(BodyRoot, FName(NAME_None), Cast<UPrimitiveComponent>(Wheel), FName(NAME_None));
+	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Null"))
 }
 
