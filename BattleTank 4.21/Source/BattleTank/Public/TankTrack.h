@@ -9,6 +9,8 @@
 /**
  * TankTrack is used to set maximum driving force and to apply forces to tank.
  */
+class ASprungWheel;
+
 UCLASS(meta = (BluePrintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 {
@@ -27,10 +29,9 @@ private:
 	UTankTrack();
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
+	TArray<ASprungWheel*> GetWheels() const;
 
-	void DriveTrack();
-	void ApplysidewaysForce();
-	float CurrentThrottle = 0;
+
+	void DriveTrack(float CurrentThrottle);
+
 };
